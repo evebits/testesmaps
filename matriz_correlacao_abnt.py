@@ -29,10 +29,10 @@ plt.rcParams['font.size'] = 10
 
 
 def plot_matriz_correlacao_grande(corr_df, caminho_saida='matriz_correlacao_tcc.png',
-                                   largura_cm=16, so_triangulo=True):
+                                   largura_cm=16, so_triangulo=True, renomear=None):
     """
-    Versão para matrizes com muitas variáveis (20-40+), como dados de
-    estação meteorológica com várias medidas por data/hora.
+    Versão para matrizes com muitas variáveis (20-40+), como estatísticas
+    de partida por jogador (passes, desarmes, toques, condução de bola...).
 
     Diferente da função `plot_matriz_correlacao`, aqui:
     - o tamanho da figura é definido em CENTÍMETROS (largura_cm), não em
@@ -48,8 +48,14 @@ def plot_matriz_correlacao_grande(corr_df, caminho_saida='matriz_correlacao_tcc.
       (`so_triangulo=True`), já que corr(A,B) == corr(B,A) — isso libera
       quase o dobro de espaço por célula sem aumentar a figura;
     - a figura é quadrada, porque a matriz é quadrada — um figsize
-      retangular (como 16x8) espreme as células na vertical.
+      retangular (como 16x8) espreme as células na vertical;
+    - `renomear`: dict opcional {nome_original: nome_curto} para encurtar
+      rótulos tipo "Interceptacoes_Int" -> "Interceptações", já que nomes
+      compostos longos são o que mais rouba espaço quando há muitas colunas.
     """
+    if renomear:
+        corr_df = corr_df.rename(index=renomear, columns=renomear)
+
     n = corr_df.shape[0]
     lado_pol = largura_cm / 2.54  # cm -> polegadas
 
