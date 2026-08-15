@@ -31,6 +31,8 @@ def plot_matriz_correlacao_grande(corr_df, caminho_saida='matriz_correlacao_tcc.
         linewidths=0.2,
         linecolor='white',
         cbar_kws={'shrink': 0.7, 'label': 'Coeficiente de correlação (r)'},
+        xticklabels=True,
+        yticklabels=True,
         ax=ax,
     )
 
