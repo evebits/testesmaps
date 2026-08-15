@@ -7,16 +7,12 @@ plt.rcParams['font.size'] = 10
 
 
 def plot_matriz_correlacao_grande(corr_df, caminho_saida='matriz_correlacao_tcc.png',
-                                   largura_cm=16, so_triangulo=True, renomear=None):
+                                   largura_cm=16, renomear=None):
     if renomear:
         corr_df = corr_df.rename(index=renomear, columns=renomear)
 
     n = corr_df.shape[0]
     lado_pol = largura_cm / 2.54
-
-    mask = None
-    if so_triangulo:
-        mask = np.triu(np.ones_like(corr_df, dtype=bool), k=1)
 
     tam_fonte = max(5, 11 - 0.12 * n)
 
@@ -24,7 +20,6 @@ def plot_matriz_correlacao_grande(corr_df, caminho_saida='matriz_correlacao_tcc.
 
     sns.heatmap(
         corr_df,
-        mask=mask,
         cmap='coolwarm',
         vmin=-1, vmax=1, center=0,
         square=True,
